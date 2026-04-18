@@ -25,3 +25,4 @@ plots/
 !docs/plots/
 *.mp4
 *.csv
+*.pkl

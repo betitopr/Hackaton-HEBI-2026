@@ -27,13 +27,17 @@ Automatizamos la identificación de **930 impactos** y **135 giros bruscos** uti
 Aplicamos Transformadas de Fourier para caracterizar el comportamiento rítmico del sistema, descartando patrones de marcha humana y confirmando dinámicas vehiculares/operativas.
 - [Análisis de Frecuencia](./docs/FREQUENCY.md)
 
+### 5. Clasificación de Actividad con IA (v2.0)
+Entrenamos un modelo de **Random Forest** enriquecido con características de tirón (Jerk) y variabilidad espacial, logrando una precisión del **80%** en la detección de estados (Carga, Movimiento, Reposo).
+- [Detalles del Modelo IA](./docs/MODEL.md)
+
 ---
 
 ## 📈 Visualizaciones Clave
 
-| Aceleración Lineal (Mundo) | Timeline de Eventos |
+| Timeline de Eventos | Importancia de Características (IA) |
 | :---: | :---: |
-| ![Acel](./docs/plots/preprocessing/linear_acceleration.png) | ![Events](./docs/plots/events/event_timeline.png) |
+| ![Events](./docs/plots/events/event_timeline.png) | ![AI Importance](./docs/plots/feature_importance.png) |
 
 ---
 

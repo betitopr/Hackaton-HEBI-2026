@@ -5,14 +5,15 @@
 ## 🚀 Resumen de Eficiencia
 | Actividad | % del Tiempo | Estado |
 | :--- | :---: | :--- |
-| Carga | 64.8% | ✅ Productivo |
-| Movimiento | 33.8% | ⚠️ Logístico |
-| Otro | 0.9% | ⚠️ Logístico |
+| Movimiento | 60.3% | ⚠️ Logístico |
+| Descarga | 24.7% | ✅ Productivo |
+| Carga | 14.1% | ✅ Productivo |
 | Reposo | 0.5% | ❌ Improductivo |
+| Otro | 0.4% | ⚠️ Logístico |
 
 ## 🚜 Operación Mecánica
-- **Total de Ciclos detectados:** 0
-- **Promedio de ciclos por hora:** 0.0
+- **Total de Ciclos detectados:** 29
+- **Promedio de ciclos por hora:** 116.3
 - **Disponibilidad Mecánica:** 100% (Sin anomalías críticas detectadas)
 
 ## 💡 Insights de la IA

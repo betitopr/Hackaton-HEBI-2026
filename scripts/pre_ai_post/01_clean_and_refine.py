@@ -36,9 +36,9 @@ df['acc_horiz_clean'] = butter_lowpass_filter(df['acc_horiz'])
 df['acc_vert_clean'] = butter_lowpass_filter(df['acc_vert'])
 df['gyr_mag_clean'] = butter_lowpass_filter(np.sqrt(df['gyr_x']**2 + df['gyr_y']**2 + df['gyr_z']**2))
 
-# 3. LIMPIEZA DE ETIQUETAS HUMANAS (Con buffer de seguridad)
-print("Limpiando etiquetas humanas (Margen de confianza 0.5s)...")
-def parse_labels_with_margin(file_path, margin=0.5):
+# 3. LIMPIEZA DE ETIQUETAS HUMANAS (Con buffer de seguridad adaptativo)
+print("Limpiando etiquetas humanas (Margen de confianza adaptativo)...")
+def parse_labels_with_margin(file_path, margin=0.3): # Reducimos margen a 0.3s para no perder descargas cortas
     labels = []
     current_min = 0
     last_sec = -1
@@ -46,14 +46,21 @@ def parse_labels_with_margin(file_path, margin=0.5):
         for line in f:
             line = line.strip()
             if not line: continue
+            
+            # Corregir typo común antes de procesar
+            line = line.replace("Decsarga", "Descarga")
+            line = line.replace("Moviiento", "Movimiento")
+            
             match_range = re.match(r'(\d+):(\d+)\s*-\s*(\d+):(\d+)\s*->\s*(.*)', line)
             if match_range:
                 s_min, s_sec, e_min, e_sec, act = match_range.groups()
                 start = int(s_min) * 60 + int(s_sec)
                 end = int(e_min) * 60 + int(e_sec)
-                # Aplicar margen de seguridad (ignorar los bordes de la etiqueta humana)
-                if end - start > 2 * margin:
+                # Aplicar margen si el segmento es largo, si es corto (<1s) usar el segmento completo
+                if end - start > 0.8:
                     labels.append({'start': start + margin, 'end': end - margin, 'activity': act.split('#')[0].strip()})
+                else:
+                    labels.append({'start': start, 'end': end, 'activity': act.split('#')[0].strip()})
                 current_min = int(e_min); last_sec = int(e_sec)
                 continue
             match_sec = re.match(r'(\d+)\s*->\s*(.*)', line)
@@ -62,11 +69,12 @@ def parse_labels_with_margin(file_path, margin=0.5):
                 if sec <= last_sec: current_min += 1
                 start = current_min * 60 + sec
                 if labels:
-                    prev_act = labels[-1]['activity']
-                    # Cerrar la actividad anterior con margen
-                    if start - labels[-1]['start'] > 2 * margin:
+                    # Cerrar la actividad anterior
+                    if start - labels[-1]['start'] > 0.8:
                         labels[-1]['end'] = start - margin
-                labels.append({'start': start + margin, 'end': start + 2, 'activity': match_sec.group(2).split('#')[0].strip()})
+                    else:
+                        labels[-1]['end'] = start
+                labels.append({'start': start, 'end': start + 1.5, 'activity': match_sec.group(2).split('#')[0].strip()})
                 last_sec = sec
     return pd.DataFrame(labels)
 

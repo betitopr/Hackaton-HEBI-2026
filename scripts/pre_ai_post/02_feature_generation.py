@@ -64,8 +64,8 @@ def get_label(t):
         if row['start'] <= t <= row['end']:
             # Simplificar categorías
             act = row['activity'].lower()
-            if 'carga' in act: return 'Carga'
             if 'descarga' in act: return 'Descarga'
+            if 'carga' in act: return 'Carga'
             if 'movimiento' in act: return 'Movimiento'
             if 'reposo' in act: return 'Reposo'
             return 'Otro'

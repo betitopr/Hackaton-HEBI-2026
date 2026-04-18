@@ -38,14 +38,33 @@ df_feat['smooth_pred'] = smooth_labels(df_feat['raw_pred'], window=5)
 total_time = df_feat['time_sec'].iloc[-1] - df_feat['time_sec'].iloc[0]
 counts = df_feat['smooth_pred'].value_counts(normalize=True) * 100
 
-# Identificación de Ciclos (Transición de Carga a Descarga)
-prev_state = None
+# Identificación de Ciclos (Máquina de Estados)
+# Ciclo Ideal: CARGA -> MOVIMIENTO -> DESCARGA
+print("Analizando ciclos de trabajo (Máquina de Estados)...")
+state_sequence = []
+last_s = None
+for s in df_feat['smooth_pred']:
+    if s != last_s:
+        state_sequence.append(s)
+        last_s = s
+
 cycles = 0
-for state in df_feat['smooth_pred']:
-    if state == 'Descarga' and prev_state == 'Carga':
+in_cycle = False
+has_moved = False
+
+for i in range(len(state_sequence)):
+    s = state_sequence[i]
+    if s == 'Carga':
+        in_cycle = True
+        has_moved = False
+    elif s == 'Movimiento' and in_cycle:
+        has_moved = True
+    elif s == 'Descarga' and in_cycle and has_moved:
         cycles += 1
-    if state != prev_state:
-        prev_state = state
+        in_cycle = False
+        has_moved = False
+    elif s == 'Reposo':
+        in_cycle = False # El reposo rompe el ciclo actual
 
 # 5. GENERACIÓN DEL REPORTE (Markdown)
 print("Generando reporte ejecutivo de productividad...")

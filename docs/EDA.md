@@ -59,5 +59,18 @@ Identifica si existe un retraso (lag) entre la respuesta del acelerómetro y el 
 
 **Interpretación:** Un pico en el lag 0 indica una respuesta instantánea y sincronizada entre ambos sensores.
 
+## Análisis de Actitud (Orientación)
+
+Para una interpretación humana de la orientación, los cuaterniones se convirtieron a **Ángulos de Euler (Roll, Pitch, Yaw)**.
+
+![Ángulos de Euler](./plots/attitude/euler_angles.png)
+
+**Análisis de los resultados:**
+- **Roll (Balanceo):** Se observa un rango de movimiento amplio, indicando cambios laterales significativos.
+- **Pitch (Cabeceo):** El promedio de -43 grados sugiere que el dispositivo mantuvo una inclinación constante hacia adelante/atrás durante gran parte de la captura.
+- **Yaw (Guiñada):** Refleja los cambios de dirección o rotaciones sobre el eje vertical.
+
+Este análisis es fundamental para reconstruir la trayectoria o la intención del movimiento en el espacio 3D.
+
 ## Sincronización de Video
 Existen archivos de video (`left.mp4` y `right.mp4`) que corresponden al mismo periodo de tiempo. El siguiente paso será alinear los timestamps del IMU con los frames de los videos para un análisis multi-modal.

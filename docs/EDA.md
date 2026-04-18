@@ -72,5 +72,21 @@ Para una interpretación humana de la orientación, los cuaterniones se convirti
 
 Este análisis es fundamental para reconstruir la trayectoria o la intención del movimiento en el espacio 3D.
 
-## Sincronización de Video
-Existen archivos de video (`left.mp4` y `right.mp4`) que corresponden al mismo periodo de tiempo. El siguiente paso será alinear los timestamps del IMU con los frames de los videos para un análisis multi-modal.
+## Sincronización de Video y Sensores
+
+Tras el análisis multimodal, se han obtenido las siguientes conclusiones críticas para la sincronización:
+
+### 1. Relación Uno a Uno (1:1)
+Se ha confirmado que existe una correspondencia exacta entre los datos:
+- **Total de frames en video:** 9403 frames (a 15 FPS nominales).
+- **Total de muestras en IMU:** 9403 filas.
+
+Esta coincidencia exacta indica que el sistema de captura registró una muestra de sensores por cada frame de video capturado, lo que simplifica enormemente el análisis: la **fila $i$** del archivo `.npy` corresponde al **frame $i$** del video.
+
+### 2. Validación de Alineación
+Se desarrolló un script de visualización dual (`scripts/create_sync_video.py`) que genera un video con superposición de gráficas en tiempo real. Esta herramienta permite validar visualmente que los picos de aceleración y giro coinciden con los eventos físicos observados en la cámara.
+
+---
+**Próximos Pasos:**
+Con la data limpia, correlacionada y sincronizada, el proyecto está listo para la fase de extracción de características avanzadas o entrenamiento de modelos de detección de actividad.
+

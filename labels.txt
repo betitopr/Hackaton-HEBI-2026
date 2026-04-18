@@ -1,0 +1,59 @@
+00:00 - 00:04 -> Reposo - Esperando a que el volquete estacione
+00:04 - 00:07 -> movimiento a la izquierda en busca de arena
+00:07 - 00:12 -> Abriendo garra mientras se mueve
+00:12 - 00:22 -> Carga de arena
+00:22 - 00:25 -> movimiento a la derecha en busca de volquete
+00:25 - 00:27 -> Descarga de arena
+00:27 - 00:31 -> movimiento a la izquierda en busca de arena
+00:31 - 00:41 -> Carga de arena
+00:41 - 00:44 -> Movimiento a la derecha en busca de volquete
+00:44 - 00:46 -> Descarga de arena
+00:46 - 00:49 -> Movimiento a la derecha en busca de volquete
+00:49 - 01:01 -> Carga de arena
+01:01 - 01:04 -> Descarga de arena
+01:04 - 01:12 -> movimiento
+01:12 - 01:18 -> Carga de arena
+01:18 - 01:24 -> Movimiento
+27 -> Descarga
+32 -> Movimiento
+38 -> Carga de arena
+43 -> Movimiento 
+45 -> Descarga
+51 -> Movimiento
+59 -> Carga de arena
+04 -> movimiento
+07 -> Descarga - Se va el volquete
+13 -> movimiento
+24 -> Carga
+30 -> Movimiento - al volquete a de la izquierda
+32 -> Descarga
+37 -> Movimiento
+50 -> Carga
+55 -> Movimiento
+57 -> Descarga 
+01 -> Movimiento
+08 -> Carga
+12 -> Movimiento
+15 -> Descarga
+12 -> Movimiento
+28 -> Carga
+33 -> Movimiento
+35 -> Descarga 
+41 -> Moviiento
+48 -> Carga
+53 -> Movimiento
+55 -> Descarga
+01 -> Movimiento
+06 -> Carga
+10 -> Movimiento
+13 -> Descarga
+17 -> Movimiento
+23 -> Carga
+26 -> Movimiento
+29 -> Descarga # Se va el volquete
+35 -> Movimiento
+43 -> carga
+53 -> Movimiento hacia la derecha
+10 -> Esperando a que el volquete se estacione
+12 -> Decsarga
+

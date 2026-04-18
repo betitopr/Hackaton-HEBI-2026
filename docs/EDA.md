@@ -32,5 +32,32 @@ A continuación se muestra la serie temporal de los sensores:
 - **Ruidos y Eventos:** Se observan picos de aceleración que sugieren movimientos bruscos o vibraciones durante la captura.
 - **Orientación:** Los cuaterniones son estables, permitiendo una reconstrucción precisa de la actitud del dispositivo.
 
+## Análisis de Correlación
+
+Para entender la interdependencia entre los sensores, se aplicaron tres técnicas de análisis estadístico:
+
+### 1. Matriz de Correlación de Pearson
+Mide la relación lineal global entre todos los pares de variables.
+
+![Matriz de Correlación](./plots/correlation/pearson_matrix.png)
+
+**Hallazgos:**
+- **Orientación:** Existe una correlación altísima entre `q_y` y `q_z` (0.99), lo que sugiere un movimiento de rotación acoplado en esos ejes durante la captura.
+- **Sensores:** Se observa una correlación moderada entre `gyr_z` y `gyr_y` (0.67), indicando giros simultáneos.
+
+### 2. Correlación Dinámica (Rolling Correlation)
+Analiza cómo cambia la relación entre la magnitud de la aceleración y la magnitud del giro a lo largo del tiempo.
+
+![Correlación Dinámica](./plots/correlation/rolling_correlation.png)
+
+Esto permite identificar fases de movimiento coordinado vs. fases de impacto o vibración pura.
+
+### 3. Correlación Cruzada (Cross-Correlation)
+Identifica si existe un retraso (lag) entre la respuesta del acelerómetro y el giroscopio.
+
+![Cross Correlation](./plots/correlation/cross_correlation_acc_gyr.png)
+
+**Interpretación:** Un pico en el lag 0 indica una respuesta instantánea y sincronizada entre ambos sensores.
+
 ## Sincronización de Video
 Existen archivos de video (`left.mp4` y `right.mp4`) que corresponden al mismo periodo de tiempo. El siguiente paso será alinear los timestamps del IMU con los frames de los videos para un análisis multi-modal.

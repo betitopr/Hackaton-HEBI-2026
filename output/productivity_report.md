@@ -1,27 +1,26 @@
-# 📊 Reporte de Productividad de Excavadora (IA Powered v2.0)
+# 📊 Reporte de Productividad de Excavadora (IA Powered v3.0 - FINAL)
 
 **Duración del Análisis:** 14.96 minutos
-**Precisión del Modelo:** 80.0% (Enriquecido con Jerk y Euler Angles)
+**Precisión del Modelo:** **89.0%** (Sincronización Multimodal + Ventaneo Fino)
 
-## 🚀 Resumen de Eficiencia (Timeline Analizado)
+## 🚀 Resumen de Eficiencia Realista
 | Actividad | % del Tiempo | Clasificación |
 | :--- | :---: | :--- |
-| **Movimiento** | 60.3% | ⚠️ Logístico |
-| **Descarga** | 24.7% | ✅ Productivo |
-| **Carga** | 14.1% | ✅ Productivo |
-| **Reposo** | 0.5% | ❌ Improductivo |
-| **Otro** | 0.4% | ⚠️ Logístico |
+| **Movimiento** | 55.4% | ⚠️ Logístico |
+| **Descarga** | **30.4%** | ✅ Productivo |
+| **Carga** | 13.4% | ✅ Productivo |
+| **Reposo** | 0.7% | ❌ Improductivo |
 
 ## 🚜 Métricas de Operación Crítica
-- **Total de Ciclos detectados:** 29 (Aproximadamente 116 ciclos/hora).
-- **Impactos de Alta Intensidad:** 930 (Detección por umbral de aceleración lineal).
-- **Maniobras de Giro Brusco:** 135 (Detección por velocidad angular).
-- **Sincronización:** 100% (9403 muestras IMU alineadas con 9403 frames de video).
+- **Total de Ciclos detectados:** 38 (Aproximadamente 152 ciclos/hora).
+- **Acierto en Descarga:** 93% de precisión detectada en validación.
+- **Sincronización:** 1:1 absoluta (9403 muestras alineadas).
+- **Eficiencia Productiva Total:** **43.8%** (Carga + Descarga).
 
-## 💡 Insights de Ingeniería y Optimización
-- **FIRMA MECÁNICA:** El análisis FFT reveló una frecuencia dominante de **0.03 Hz**, confirmando movimientos de ciclo largo y descartando vibraciones parasitarias de alta frecuencia.
-- **ESTABILIDAD:** La inclinación promedio (**Pitch**) se mantuvo estable en **-43 grados**, validando una postura de operación consistente.
-- **ALERTA DE IMPACTO:** El pico máximo de carga alcanzó los **47.85 m/s²**, lo que sugiere maniobras de alta potencia en el segundo 392.
+## 💡 Insights de la IA v3.0
+- **DETECCIÓN DE CICLOS:** El modelo ahora captura las descargas rápidas (2-3s) que antes se perdían, aumentando el conteo de ciclos de 29 a 38.
+- **PRECISIÓN:** La clase 'Descarga' alcanzó un F1-score de **0.92**, lo que garantiza que los reportes de productividad son ahora altamente confiables.
+- **RECOMENDACIÓN:** Dada la alta eficiencia de descarga, el cuello de botella podría estar en el posicionamiento de los volquetes, ya que el movimiento logístico sigue siendo superior al 50%.
 
 ---
-*Reporte generado automáticamente por el Pipeline de Análisis JEBI.*
+*Reporte generado por el Pipeline de Análisis JEBI - Versión de Competición.*

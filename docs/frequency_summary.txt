@@ -1,0 +1,3 @@
+ANÁLISIS DE FRECUENCIA
+Frecuencia de Muestreo: 10.45 Hz
+Frecuencia Dominante: 0.03 Hz

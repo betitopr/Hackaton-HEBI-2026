@@ -22,17 +22,31 @@ df = pd.read_csv(FEATURE_SET)
 train_data = df[df['label'] != 'Sin Etiqueta'].copy()
 print(f"Total de ventanas para entrenamiento: {len(train_data)}")
 
-# 2. PREPARACIÓN DE VARIABLES
-# Seleccionamos las características, excluyendo el tiempo y la etiqueta
+# 2. PREPARACIÓN DE VARIABLES Y DATA AUGMENTATION
 X = train_data.drop(['time_sec', 'label'], axis=1)
 y = train_data['label']
 
-# División en Entrenamiento (80%) y Prueba (20%)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+# --- ESTRATEGIA ANTI-OVERFITTING: Jittering (Ruido Gaussiano) ---
+print("Aplicando Data Augmentation (Jittering) para reducir overfitting...")
+X_noisy = X + np.random.normal(0, X.std() * 0.05, X.shape)
+X_combined = pd.concat([X, X_noisy], axis=0)
+y_combined = pd.concat([y, y], axis=0)
 
-# 3. ENTRENAMIENTO
-print("Entrenando clasificador Random Forest...")
-model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+# División en Entrenamiento y Prueba
+X_train, X_test, y_train, y_test = train_test_split(
+    X_combined, y_combined, test_size=0.2, random_state=42, stratify=y_combined
+)
+
+# 3. ENTRENAMIENTO CON REGULARIZACIÓN
+print("Entrenando clasificador con regularización agresiva...")
+model = RandomForestClassifier(
+    n_estimators=150, 
+    max_depth=7,            # Reducido de 10 a 7 para generalizar mejor
+    min_samples_leaf=5,     # Evita hojas con muy pocos datos (ruido)
+    max_features='sqrt',    # Fuerza a los árboles a usar subconjuntos de features
+    random_state=42,
+    n_jobs=-1               # Usar todos los núcleos
+)
 model.fit(X_train, y_train)
 
 # 4. EVALUACIÓN

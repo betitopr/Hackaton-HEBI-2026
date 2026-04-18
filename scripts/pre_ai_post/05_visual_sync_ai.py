@@ -8,8 +8,8 @@ import os
 # --- CONFIGURACIÓN ---
 VIDEO_PATH = 'data/40343737_20260313_110600_to_112100_left.mp4'
 PREDICTIONS_PATH = 'data/activity_predictions.csv'
-OUTPUT_PATH = 'output/ai_sync_video.mp4'
-MAX_FRAMES = 900  # 1 minuto a 15 fps para una demostración sólida
+OUTPUT_PATH = 'output/ai_sync_video_full.mp4'
+# Sin límite de frames para procesar el video completo
 os.makedirs('output', exist_ok=True)
 
 # 1. CARGA DE DATOS
@@ -40,9 +40,10 @@ plt.style.use('dark_background')
 fig, ax = plt.subplots(figsize=(4.8, height/100), dpi=100)
 canvas = FigureCanvasAgg(fig)
 
-print(f"Generando video de sincronización IA en {OUTPUT_PATH}...")
+print(f"Generando video completo de sincronización IA en {OUTPUT_PATH}...")
 
-for i in range(MAX_FRAMES):
+i = 0
+while True:
     ret, frame = cap.read()
     if not ret: break
     
@@ -85,8 +86,9 @@ for i in range(MAX_FRAMES):
     combined = np.hstack((frame, plot_img))
     out.write(combined)
     
-    if i % 100 == 0:
-        print(f"Sincronizando frame {i}/{MAX_FRAMES}...")
+    if i % 500 == 0:
+        print(f"Sincronizando frame {i}...")
+    i += 1
 
 cap.release()
 out.release()

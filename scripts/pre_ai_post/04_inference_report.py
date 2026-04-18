@@ -5,8 +5,8 @@ import joblib
 import os
 
 # --- CONFIGURACIÓN ---
-FEATURE_SET = 'data/imu_enriched.csv'
-MODEL_FILE = 'data/activity_model.pkl'
+FEATURE_SET = 'data/refined/imu_clean.csv'
+MODEL_FILE = 'data/refined/excavator_model.pkl'
 REPORT_OUTPUT = 'output/productivity_report.md'
 PLOT_DIR = 'docs/plots/inference'
 os.makedirs(PLOT_DIR, exist_ok=True)
@@ -17,7 +17,7 @@ model = joblib.load(MODEL_FILE)
 df_feat = pd.read_csv(FEATURE_SET)
 
 # 2. PREPARACIÓN DE CARACTERÍSTICAS (Windowing igual al entrenamiento)
-window_size = 10 
+window_size = 20 
 step_size = 5    
 
 features = []
@@ -25,19 +25,20 @@ print("Generando ventanas para inferencia global...")
 for i in range(0, len(df_feat) - window_size, step_size):
     win = df_feat.iloc[i : i + window_size]
     t_mid = win['time_sec'].mean()
+    
+    # IMPORTANTE: Estas deben ser IDÉNTICAS a 02_feature_generation.py
     feat = {
         'time_sec': t_mid,
-        'acc_std': win['linear_mag'].std(),
-        'acc_mean': win['linear_mag'].mean(),
-        'acc_max': win['linear_mag'].max(),
-        'gyr_std': win['gyr_mag'].std(),
-        'gyr_max': win['gyr_mag'].max(),
-        'jerk_std': win['jerk'].std(),
-        'jerk_max': win['jerk'].max(),
-        'roll_std': win['roll'].std(),
-        'pitch_std': win['pitch'].std(),
-        'yaw_std': win['yaw'].std(),
-        'pitch_mean': win['pitch'].mean()
+        'acc_h_mean': win['acc_horiz_clean'].mean(),
+        'acc_h_std': win['acc_horiz_clean'].std(),
+        'acc_h_max': win['acc_horiz_clean'].max(),
+        'acc_v_mean': win['acc_vert_clean'].mean(),
+        'acc_v_std': win['acc_vert_clean'].std(),
+        'acc_v_max': win['acc_vert_clean'].max(),
+        'gyr_mean': win['gyr_mag_clean'].mean(),
+        'gyr_std': win['gyr_mag_clean'].std(),
+        'pitch': np.arctan2(-win['linear_acc_x'], np.sqrt(win['linear_acc_y']**2 + win['linear_acc_z']**2)).mean(),
+        'v_h_ratio': win['acc_vert_clean'].mean() / (win['acc_horiz_clean'].mean() + 1e-5)
     }
     features.append(feat)
 
